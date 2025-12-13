@@ -174,7 +174,8 @@ void UCI::loop() {
         token.clear(); // Avoid a stale if getline() returns empty or blank line
         is >> skipws >> token;
 
-        if (token == "uci")             cout << "uciok"  << endl;
+        if (token == "uci")             cout << "uciok"   << endl;
+        else if (token == "isready")    cout << "readyok" << endl;
         else if (token == "go")         go(is);
         else if (token == "team")       team(is);
         else if (token == "set")        mode(is);
