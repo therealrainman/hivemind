@@ -66,10 +66,10 @@ void Agent::run_search(Board& board, const vector<Engine*>& engines, int moveTim
     for (int i = 0; i < numberOfThreads; i++) {
         threads[i]->join();
     }
-    
+
     // Retrieve the principal variation from the search.
     vector<pair<int, Stockfish::Move>> pv = rootNode->get_principle_variation();
-    
+
     // Print rawpv for debugging
     cout << "info rawpv ";
     for (auto action : pv) {
@@ -83,8 +83,8 @@ void Agent::run_search(Board& board, const vector<Engine*>& engines, int moveTim
     cout << " Q value " << rootNode->Q();
     cout << " nodes " << searchInfo->get_nodes_searched();
     cout << " nps "
-         << (searchInfo->get_nodes_searched() * 1000) /
-            searchInfo->elapsed();
+         << static_cast<int>((searchInfo->get_nodes_searched() * 1000) /
+            searchInfo->elapsed());
     cout << " collisions " << searchInfo->get_collisions();
 
     cout << " pv ";
