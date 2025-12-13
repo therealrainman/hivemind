@@ -76,13 +76,15 @@ void Agent::run_search(Board& board, const vector<Engine*>& engines, int moveTim
         cout << board.uci_move(action.first, action.second) << " ";
     }
     cout << endl;
-    
+
     // Print infodict for uci compatibility
     cout << setprecision(3) << fixed;
-    cout << "info time " << (searchInfo->elapsed());
+    cout << "info time " << static_cast<int>(searchInfo->elapsed());
     cout << " Q value " << rootNode->Q();
     cout << " nodes " << searchInfo->get_nodes_searched();
-    cout << " nps " << searchInfo->get_nodes_searched() / (searchInfo->elapsed());
+    cout << " nps "
+         << (searchInfo->get_nodes_searched() * 1000) /
+            searchInfo->elapsed();
     cout << " collisions " << searchInfo->get_collisions();
 
     cout << " pv ";
