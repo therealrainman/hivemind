@@ -235,7 +235,20 @@ class Board {
             std::string move_str = Stockfish::UCI::move(*pos[board_num], move).c_str();
 
             // Concatenate board_num and move_str without a space
-            // return oss.str() + move_str;
+            return oss.str() + move_str;
+        }
+        
+        std::string uci_move_noboardnum(int board_num, Stockfish::Move move) { 
+            if (move == Stockfish::MOVE_NULL) {
+                return "pass";
+            }
+            std::ostringstream oss;
+            oss << board_num + 1;
+
+            // Get the UCI move string
+            std::string move_str = Stockfish::UCI::move(*pos[board_num], move).c_str();
+
+            // Return move_str as-is
             return move_str;
         }
 

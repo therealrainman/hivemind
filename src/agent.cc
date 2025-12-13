@@ -66,24 +66,33 @@ void Agent::run_search(Board& board, const vector<Engine*>& engines, int moveTim
     for (int i = 0; i < numberOfThreads; i++) {
         threads[i]->join();
     }
-
+    
     // Retrieve the principal variation from the search.
-    cout << setprecision(3) << fixed;
-    cout << "info time " << (searchInfo->elapsed() / 1000);
-    cout << " Q value " << rootNode->Q();
-    cout << " nodes " << searchInfo->get_nodes_searched();
-    cout << " nps " << searchInfo->get_nodes_searched() / (searchInfo->elapsed() / 1000);
-    cout << " collisions " << searchInfo->get_collisions();
-
     vector<pair<int, Stockfish::Move>> pv = rootNode->get_principle_variation();
-    cout << " pv ";
+    
+    // Print rawpv for debugging
+    cout << "info rawpv ";
     for (auto action : pv) {
         cout << board.uci_move(action.first, action.second) << " ";
     }
     cout << endl;
+    
+    // Print infodict for uci compatibility
+    cout << setprecision(3) << fixed;
+    cout << "info time " << (searchInfo->elapsed());
+    cout << " Q value " << rootNode->Q();
+    cout << " nodes " << searchInfo->get_nodes_searched();
+    cout << " nps " << searchInfo->get_nodes_searched() / (searchInfo->elapsed());
+    cout << " collisions " << searchInfo->get_collisions();
+
+    cout << " pv ";
+    for (auto action : pv) {
+        cout << board.uci_move_noboardnum(action.first, action.second) << " ";
+    }
+    cout << endl;
 
     // Print the best move.
-    cout << "bestmove " << board.uci_move(pv[0].first, pv[0].second) << endl;
+    cout << "bestmove " << board.uci_move_noboardnum(pv[0].first, pv[0].second) << endl;
 
     // Clean up dynamically allocated resources.
     delete searchInfo;
