@@ -235,7 +235,8 @@ class Board {
             std::string move_str = Stockfish::UCI::move(*pos[board_num], move).c_str();
 
             // Concatenate board_num and move_str without a space
-            return oss.str() + move_str;
+            // return oss.str() + move_str;
+            return move_str;
         }
 
         bool is_checkmate(Stockfish::Color side);
