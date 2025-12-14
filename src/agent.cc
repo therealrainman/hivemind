@@ -87,16 +87,23 @@ void Agent::run_search(Board& board, const vector<Engine*>& engines, int moveTim
             searchInfo->elapsed());
     cout << " collisions " << searchInfo->get_collisions();
 
+    // Modify pv to include only board 1 moves
+    pair<int, Stockfish::Move> board1_bestmove = {-1, Stockfish::Move()};
     cout << " pv ";
     for (auto action : pv) {
-        if (action.first == 0) {
+        if (action.first == 0 && action.second != Stockfish::MOVE_NULL) {
+            board1_bestmove = {action.first, action.second};
             cout << board.uci_move_noboardnum(action.first, action.second) << " ";
         }
     }
     cout << endl;
 
     // Print the best move.
-    cout << "bestmove " << board.uci_move_noboardnum(pv[0].first, pv[0].second) << endl;
+    if (board1_bestmove.first == 0) {
+        cout << "bestmove " << board.uci_move_noboardnum(board1_bestmove.first, board1_bestmove.second) << endl;
+    } else {
+        cout << "bestmove (none)" << endl;
+    }
 
     // Clean up dynamically allocated resources.
     delete searchInfo;
