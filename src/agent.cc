@@ -89,7 +89,9 @@ void Agent::run_search(Board& board, const vector<Engine*>& engines, int moveTim
 
     cout << " pv ";
     for (auto action : pv) {
-        cout << board.uci_move_noboardnum(action.first, action.second) << " ";
+        if (action.first == 1) {
+            cout << board.uci_move_noboardnum(action.first, action.second) << " ";
+        }
     }
     cout << endl;
 
