@@ -71,7 +71,7 @@ void Agent::run_search(Board& board, const vector<Engine*>& engines, int moveTim
     vector<pair<int, Stockfish::Move>> pv = rootNode->get_principle_variation();
 
     // Print rawpv for debugging
-    cout << "info rawpv ";
+    cout << "info string Raw pv: ";
     for (auto action : pv) {
         cout << board.uci_move(action.first, action.second) << " ";
     }
@@ -80,7 +80,7 @@ void Agent::run_search(Board& board, const vector<Engine*>& engines, int moveTim
     // Print infodict for uci compatibility
     cout << setprecision(3) << fixed;
     cout << "info time " << static_cast<int>(searchInfo->elapsed());
-    cout << " Q value " << rootNode->Q();
+    // cout << " Q value " << rootNode->Q();
     cout << " nodes " << searchInfo->get_nodes_searched();
     cout << " nps "
          << static_cast<int>((searchInfo->get_nodes_searched() * 1000) /
