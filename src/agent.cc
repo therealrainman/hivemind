@@ -91,7 +91,7 @@ void Agent::run_search(Board& board, const vector<Engine*>& engines, int moveTim
     pair<int, Stockfish::Move> board1_bestmove = {-1, Stockfish::Move()};
     cout << " pv ";
     for (auto action : pv) {
-        if (action.first == 0 && action.second != Stockfish::MOVE_NULL) {
+        if (board1_bestmove.first == -1 && action.first == 0 && action.second != Stockfish::MOVE_NULL) {
             board1_bestmove = {action.first, action.second};
             cout << board.uci_move_noboardnum(action.first, action.second) << " ";
         }
